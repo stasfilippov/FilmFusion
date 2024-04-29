@@ -19,7 +19,7 @@ export const MoviePage: React.FC = () => {
 
   return (
     <section>
-      <div className={'relative rounded-xl overflow-hidden mb-4'}>
+      <div className={'relative rounded-xl overflow-hidden mb-4 max-h-576'}>
         <img src={currentMovie.backdrop?.url || '#'} alt="movieBanner" />
         <div className={'absolute bottom-8 left-8 z-10'}>
           <div className={'font-bold text-3xl mb-1'}>{currentMovie.name}</div>

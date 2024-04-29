@@ -4,8 +4,8 @@ import { Footer } from './Footer/Footer.tsx'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <div className={'text-white bg-primary'}>
-      <div className={'container mx-auto h-full flex flex-col'}>
+    <div className={' bg-primary h-full'}>
+      <div className={'container mx-auto text-white flex flex-col'}>
         <Header />
         <main className={'flex-content mb-10'}>{children}</main>
         <Footer />

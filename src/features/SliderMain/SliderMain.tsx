@@ -20,11 +20,11 @@ export const SliderMain: React.FC<SliderMainPropsType> = ({ items }) => {
   }
 
   return (
-    <div className="slider-container h-576 mb-5">
-      <Slider {...settings} className={'h-full'}>
+    <div className="slider-container h-full mb-5">
+      <Slider {...settings}>
         {items.map((el) => {
           return (
-            <div className={'relative rounded-xl overflow-hidden'}>
+            <div className={' h-full relative rounded-xl overflow-hidden'}>
               <img src={el.backdrop?.url || '#'} alt="moviePicture" />
               <div className={'absolute bottom-8 left-8 z-10'}>
                 <h3 className={'font-bold text-3xl mb-1'}>{el.name}</h3>

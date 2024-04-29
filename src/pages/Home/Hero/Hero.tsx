@@ -9,7 +9,7 @@ export const Hero = () => {
   const filteredNewMovies = newMovies.filter((movie) => movie.backdrop?.url !== null)
 
   return (
-    <article>
+    <article className={'h-max-576'}>
       <SliderMain items={filteredNewMovies} />
     </article>
   )

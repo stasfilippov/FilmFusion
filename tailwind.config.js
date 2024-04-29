@@ -16,8 +16,7 @@ export default {
         layout: 'auto 1fr auto',
       },
       flex: {
-        footer: '0 0 auto',
-        content: '1 0 auto',
+        content: '1 1 auto',
       },
     },
   },
