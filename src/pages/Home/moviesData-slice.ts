@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { components } from '../../.temp/types'
-import { movieAPI } from './movieAPI'
-
-
+import { components } from '../../../.temp/types.ts'
+import { movieAPI } from '../../api/movieAPI.ts'
+import { setAppStatus } from '../../app/app-slice.ts'
+import { handleServerNetworkError } from '../../utils/utils-error.ts'
 
 export const slice = createSlice({
   name: 'moviesData',
@@ -20,64 +20,84 @@ export const slice = createSlice({
       })
       .addCase(fetchNewMovies.rejected, (state, action) => {
         state.newMovies = []
-      }) //!сделать правильную обработку ошибок
+      })
       .addCase(fetchDramsMovies.fulfilled, (state, action) => {
         state.dramsMovies = action.payload.res.data.docs
       })
       .addCase(fetchDramsMovies.rejected, (state, action) => {
         state.dramsMovies = []
-      }) //!сделать правильную обработку ошибок
+      })
       .addCase(fetchComedyMovies.fulfilled, (state, action) => {
         state.comedyMovies = action.payload.res.data.docs
       })
       .addCase(fetchComedyMovies.rejected, (state, action) => {
         state.comedyMovies = []
-      }) //!сделать правильную обработку ошибок
+      })
       .addCase(fetchHorrorMovies.fulfilled, (state, action) => {
         state.horrorsMovies = action.payload.res.data.docs
       })
       .addCase(fetchHorrorMovies.rejected, (state, action) => {
         state.horrorsMovies = []
-      }) //!сделать правильную обработку ошибок
+      })
   },
 })
 
 export const fetchNewMovies = createAsyncThunk(`${slice.name}/fetchNewMovies`, async (param, thunkAPI) => {
+  const { dispatch } = thunkAPI
+
   try {
-    const { dispatch } = thunkAPI
+    dispatch(setAppStatus({ status: 'loading' }))
     const res = await movieAPI.getNewMovies()
+    dispatch(setAppStatus({ status: 'success' }))
     return { res }
   } catch (error) {
-    return thunkAPI.rejectWithValue(null) //!сделать правильную обработку ошибок
+    handleServerNetworkError(error, dispatch)
+    dispatch(setAppStatus({ status: 'failed' }))
+    return thunkAPI.rejectWithValue(null)
   }
 })
 export const fetchDramsMovies = createAsyncThunk(`${slice.name}/fetchDramsMovies`, async (param, thunkAPI) => {
+  const { dispatch } = thunkAPI
+
   try {
-    const { dispatch } = thunkAPI
+    dispatch(setAppStatus({ status: 'loading' }))
     const res = await movieAPI.getMoviesByGenre('драма')
+    dispatch(setAppStatus({ status: 'success' }))
     return { res }
   } catch (error) {
-    return thunkAPI.rejectWithValue(null) //!сделать правильную обработку ошибок
+    handleServerNetworkError(error, dispatch)
+    dispatch(setAppStatus({ status: 'failed' }))
+    return thunkAPI.rejectWithValue(null)
   }
 })
 
 export const fetchComedyMovies = createAsyncThunk(`${slice.name}/fetchComedyMovies`, async (param, thunkAPI) => {
+  const { dispatch } = thunkAPI
+
   try {
-    const { dispatch } = thunkAPI
+    dispatch(setAppStatus({ status: 'loading' }))
     const res = await movieAPI.getMoviesByGenre('комедия')
+    dispatch(setAppStatus({ status: 'success' }))
     return { res }
   } catch (error) {
-    return thunkAPI.rejectWithValue(null) //!сделать правильную обработку ошибок
+    handleServerNetworkError(error, dispatch)
+    dispatch(setAppStatus({ status: 'failed' }))
+    return thunkAPI.rejectWithValue(null)
   }
 })
 
 export const fetchHorrorMovies = createAsyncThunk(`${slice.name}/fetchHorrorMovies`, async (param, thunkAPI) => {
+  const { dispatch } = thunkAPI
+
   try {
-    const { dispatch } = thunkAPI
+    dispatch(setAppStatus({ status: 'loading' }))
     const res = await movieAPI.getMoviesByGenre('ужасы')
+    dispatch(setAppStatus({ status: 'success' }))
     return { res }
   } catch (error) {
-    return thunkAPI.rejectWithValue(null) //!сделать правильную обработку ошибок
+    handleServerNetworkError(error, dispatch)
+    dispatch(setAppStatus({ status: 'failed' }))
+    return thunkAPI.rejectWithValue(null)
   }
 })
 

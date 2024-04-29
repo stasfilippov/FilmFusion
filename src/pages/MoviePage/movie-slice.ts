@@ -1,16 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { components } from '../../../.temp/types'
 import { movieAPI } from '../../api/movieAPI'
-
-const fetchMovieById = createAsyncThunk('currentMovie/fetchMovieById', async (id: number, thunkAPI) => {
-  try {
-    const { dispatch } = thunkAPI
-    const res = await movieAPI.getMovieById(id)
-    return { res }
-  } catch (error) {
-    return thunkAPI.rejectWithValue(null) //!сделать правильную обработку ошибок
-  }
-})
+import { setAppStatus } from '../../app/app-slice.ts'
+import { handleServerNetworkError } from '../../utils/utils-error.ts'
 
 export const slice = createSlice({
   name: 'currentMovie',
@@ -19,13 +11,29 @@ export const slice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchMovieById.fulfilled, (state, action) => {
-      state.currentMovie = action.payload.res.data.responses[200].content['application/json']
-    }),
-      builder.addCase(fetchMovieById.rejected, (state, action) => {
+    builder
+      .addCase(fetchMovieById.fulfilled, (state, action) => {
+        state.currentMovie = action.payload.res.data
+      })
+      .addCase(fetchMovieById.rejected, (state, action) => {
         state.currentMovie = {}
       })
   },
+})
+
+export const fetchMovieById = createAsyncThunk(`${slice.name}/fetchMovieById`, async (id: number, thunkAPI) => {
+  const { dispatch } = thunkAPI
+
+  try {
+    dispatch(setAppStatus({ status: 'loading' }))
+    const res = await movieAPI.getMovieById(id)
+    dispatch(setAppStatus({ status: 'success' }))
+    return { res }
+  } catch (error) {
+    handleServerNetworkError(error, dispatch)
+    dispatch(setAppStatus({ status: 'failed' }))
+    return thunkAPI.rejectWithValue(null)
+  }
 })
 
 export const currentMovieReducer = slice.reducer

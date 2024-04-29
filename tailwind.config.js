@@ -10,8 +10,15 @@ export default {
         primary: '#0f172a',
       },
       spacing: {
-        '702': '702px'
-      }
+        576: '576px',
+      },
+      gridTemplateRows: {
+        layout: 'auto 1fr auto',
+      },
+      flex: {
+        footer: '0 0 auto',
+        content: '1 0 auto',
+      },
     },
   },
   plugins: [],
