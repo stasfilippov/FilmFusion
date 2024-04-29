@@ -1,8 +1,9 @@
 import axios from 'axios'
+import {components, operations} from '../../.temp/types'
 
 const instance = axios.create({
   baseURL: 'https://api.kinopoisk.dev/v1.4',
-  withCredentials: true,
+  // withCredentials: ,
   headers: {
     'X-API-KEY': '7H3RGW4-70K4045-J0H2QZX-Q2Y9A9K',
   },
@@ -10,16 +11,19 @@ const instance = axios.create({
 
 //api
 export const movieAPI = {
+  getMovieById(id: number) {
+    return instance.get<components["schemas"]["MovieDtoV1_4"]>(`/movie/${id}`)
+  },
   getNewMovies() {
-    return instance.get('/movie?year=2024')
+    return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>('/movie?year=2024')
   },
   getDramsMovies() {
-    return instance.get('/movie?genres.name=драма')
+    return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>('/movie?genres.name=драма')
   },
   getComedyMovies() {
-    return instance.get('/movie?genres.name=комедия')
+    return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>('/movie?genres.name=комедия')
   },
   getHorrorMovies() {
-    return instance.get('/movie?genres.name=ужасы')
+    return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>('/movie?genres.name=ужасы')
   },
 }

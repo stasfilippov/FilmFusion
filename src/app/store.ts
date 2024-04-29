@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { sliderMainReducer } from '../features/SliderMain/SliderSlice'
+import {moviesDataReducer} from '../api/moviesData-slice.ts'
+import { currentMovieReducer } from '../pages/MoviePage/movie-slice'
 
 export const store = configureStore({
   reducer: {
-    sliderMain: sliderMainReducer,
+    moviesData: moviesDataReducer,
+    currentMovie: currentMovieReducer,
   },
 })
