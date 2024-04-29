@@ -17,13 +17,7 @@ export const movieAPI = {
   getNewMovies() {
     return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>('/movie?year=2024')
   },
-  getDramsMovies() {
-    return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>('/movie?genres.name=драма')
-  },
-  getComedyMovies() {
-    return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>('/movie?genres.name=комедия')
-  },
-  getHorrorMovies() {
-    return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>('/movie?genres.name=ужасы')
-  },
+  getMoviesByGenre(genre: string) {
+    return instance.get<components["schemas"]["MovieDocsResponseDtoV1_4"]>(`/movie?genres.name=${genre}`)
+  }
 }

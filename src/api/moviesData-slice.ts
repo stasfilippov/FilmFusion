@@ -54,7 +54,7 @@ export const fetchNewMovies = createAsyncThunk(`${slice.name}/fetchNewMovies`, a
 export const fetchDramsMovies = createAsyncThunk(`${slice.name}/fetchDramsMovies`, async (param, thunkAPI) => {
   try {
     const { dispatch } = thunkAPI
-    const res = await movieAPI.getDramsMovies()
+    const res = await movieAPI.getMoviesByGenre('драма')
     return { res }
   } catch (error) {
     return thunkAPI.rejectWithValue(null) //!сделать правильную обработку ошибок
@@ -64,7 +64,7 @@ export const fetchDramsMovies = createAsyncThunk(`${slice.name}/fetchDramsMovies
 export const fetchComedyMovies = createAsyncThunk(`${slice.name}/fetchComedyMovies`, async (param, thunkAPI) => {
   try {
     const { dispatch } = thunkAPI
-    const res = await movieAPI.getComedyMovies()
+    const res = await movieAPI.getMoviesByGenre('комедия')
     return { res }
   } catch (error) {
     return thunkAPI.rejectWithValue(null) //!сделать правильную обработку ошибок
@@ -74,7 +74,7 @@ export const fetchComedyMovies = createAsyncThunk(`${slice.name}/fetchComedyMovi
 export const fetchHorrorMovies = createAsyncThunk(`${slice.name}/fetchHorrorMovies`, async (param, thunkAPI) => {
   try {
     const { dispatch } = thunkAPI
-    const res = await movieAPI.getHorrorMovies()
+    const res = await movieAPI.getMoviesByGenre('ужасы')
     return { res }
   } catch (error) {
     return thunkAPI.rejectWithValue(null) //!сделать правильную обработку ошибок

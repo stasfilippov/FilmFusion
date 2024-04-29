@@ -3,6 +3,8 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import img from '../../assets/logo.jpg'
+import {useSelector} from 'react-redux';
+import {sliderMainSelectors} from './sliderMain-selectors.ts';
 
 export function SliderMain() {
   const settings = {
@@ -15,23 +17,16 @@ export function SliderMain() {
     waitForAnimate: false,
   }
 
-  useEffect(() => {}, [])
+  const newMovies = useSelector(sliderMainSelectors)
+
+
 
   return (
-    <div className="slider-container">
-      <Slider {...settings}>
-        <div>
-          <img src={img} alt="" />
-        </div>
-        <div>
-          <img src={img} alt="" />
-        </div>
-        <div>
-          <img src={img} alt="" />
-        </div>
-        <div>
-          <img src={img} alt="" />
-        </div>
+    <div className="slider-container h-702">
+      <Slider {...settings} className={'h-full'}>
+          <div>
+            {/*<img src={newMovies[0].poster?.url!} alt="picture" />*/}
+          </div>
       </Slider>
     </div>
   )
